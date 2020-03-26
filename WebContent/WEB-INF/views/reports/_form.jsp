@@ -35,7 +35,7 @@
 <label for="report_content">内容</label>
 <br>
 <textarea name="content" rows="10" cols="50">
-    value="${report.content}">
+${report.content}
 </textarea>
 <br>
 <br>
