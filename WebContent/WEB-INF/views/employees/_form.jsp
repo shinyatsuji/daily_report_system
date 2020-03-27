@@ -5,7 +5,7 @@
 <div id="flush_error">
 入力内容にエラーがあります。 <br>
 <c:forEach var="error" items="${errors}">
-<c:out value="${errors}"/>
+<c:out value="${error}"/><br>
 </c:forEach>
 </div>
 </c:if>
@@ -19,7 +19,7 @@
 <br><br>
 
 <label for="password">パスワード</label>
-<input type="text" name="password" value="${employee.password}">
+<input type="text" name="password" >
 <br><br>
 
 <label for="code">権限</label><br>
