@@ -33,9 +33,10 @@ public class ReportsUpdateServlet extends HttpServlet {
     }
 
     /**
+     * @return
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected Object doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String _token = (String) request.getParameter("_token");
         if (_token != null && _token.equals(request.getSession().getId())) {
@@ -43,7 +44,19 @@ public class ReportsUpdateServlet extends HttpServlet {
 
             Report r = em.find(Report.class, (Integer) (request.getSession().getAttribute("report_id")));
 
-            r.setReport_date(Date.valueOf(request.getParameter("report_date")));
+            try {
+                r.setReport_date(Date.valueOf(request.getParameter("report_date")));
+            } catch (Exception e) {
+                return null;
+            }
+
+            //            Date report_date = Date.valueOf(request.getParameter("report_date"));
+            //            if (report_date == null || report_date.equals("")) {
+            //                //                r.setReport_date(new Date(System.currentTimeMillis()));
+            //
+            //            } else {
+            //                r.setReport_date(report_date);
+            //            }
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
             r.setUpdated_at(new Timestamp(System.currentTimeMillis()));

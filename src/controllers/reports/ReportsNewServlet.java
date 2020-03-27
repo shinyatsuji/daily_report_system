@@ -1,7 +1,7 @@
 package controllers.reports;
 
 import java.io.IOException;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

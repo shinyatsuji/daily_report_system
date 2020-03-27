@@ -1,5 +1,6 @@
 package models.validators;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,11 @@ public class ReportValidator {
             errors.add(content_error);
         }
 
+        String report_date_error = _validateReport_Date(r.getReport_date());
+        if (!report_date_error.equals("")) {
+            errors.add(report_date_error);
+        }
+
         return errors;
     }
 
@@ -32,6 +38,13 @@ public class ReportValidator {
     private static String _validateContent(String content) {
         if (content == null || content.equals("")) {
             return "内容を入力してください。";
+        }
+        return "";
+    }
+
+    private static String _validateReport_Date(Date report_date) {
+        if (report_date == null || report_date.equals("")) {
+            return "日付を入力してください。";
         }
         return "";
     }

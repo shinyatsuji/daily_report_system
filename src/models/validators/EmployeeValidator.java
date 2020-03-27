@@ -57,7 +57,7 @@ public class EmployeeValidator {
     private static String _validatePassword(String password, Boolean password_check_flag) {
         if (password_check_flag && (password == null || password.equals(""))) {
 
-            return "社員番号を入力してください。";
+            return "パスワードを入力してください。";
         }
         return "";
     }
