@@ -43,9 +43,10 @@ public class ReportValidator {
     }
 
     private static String _validateReport_Date(Date report_date) {
-        if (report_date == null || report_date.equals("")) {
+        try {
+            return "";
+        } catch (IllegalArgumentException e) {
             return "日付を入力してください。";
         }
-        return "";
     }
 }
