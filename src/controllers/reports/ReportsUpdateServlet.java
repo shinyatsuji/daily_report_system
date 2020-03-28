@@ -42,7 +42,6 @@ public class ReportsUpdateServlet extends HttpServlet {
             EntityManager em = DBUtil.createEntityManager();
 
             Report r = em.find(Report.class, (Integer) (request.getSession().getAttribute("report_id")));
-
             request.getParameter("report_date");
 
             r.setReport_date(Date.valueOf(request.getParameter("report_date")));
