@@ -19,7 +19,7 @@
 <br><br>
 
 <label for="password">パスワード</label>
-<input type="text" name="password" >
+<input type="password" name="password" >
 <br><br>
 
 <label for="code">権限</label><br>

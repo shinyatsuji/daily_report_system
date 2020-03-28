@@ -3,6 +3,7 @@ package controllers.reports;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -42,14 +43,27 @@ public class ReportsUpdateServlet extends HttpServlet {
             EntityManager em = DBUtil.createEntityManager();
 
             Report r = em.find(Report.class, (Integer) (request.getSession().getAttribute("report_id")));
-            System.out.println(request.getParameter("report_date"));
 
-            r.setReport_date(Date.valueOf(request.getParameter("report_date")));
+            //            Date report_date = new Date(System.currentTimeMillis());
+            //            String rd_str = request.getParameter("report_date");
+            //            if (rd_str != null && !rd_str.equals("")) {
+            //                report_date = Date.valueOf(request.getParameter("report_date"));
+            //            }
+            //            r.setReport_date(report_date);
+
+            List<String> errors = new ArrayList<String>();
+            String rd_str = request.getParameter("report_date");
+            if (rd_str != null && !rd_str.equals("")) {
+                r.setReport_date(Date.valueOf(rd_str));
+            } else {
+                errors.add(ReportValidator._validateReport_Date(rd_str));
+            }
+
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
             r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 
-            List<String> errors = ReportValidator.validate(r);
+            ReportValidator.validate(r);
             if (errors.size() > 0) {
                 em.close();
 
