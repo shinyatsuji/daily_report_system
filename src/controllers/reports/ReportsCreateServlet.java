@@ -63,7 +63,7 @@ public class ReportsCreateServlet extends HttpServlet {
             r.setCreated_at(currentTime);
             r.setUpdated_at(currentTime);
 
-            List<String> errors = ReportValidator.validate(r);
+            List<String> errors = ReportValidator._validate(r);
             if (errors.size() > 0) {
                 em.close();
                 request.setAttribute("_token", request.getSession().getId());

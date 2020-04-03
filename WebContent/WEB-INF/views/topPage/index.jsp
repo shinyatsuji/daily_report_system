@@ -10,6 +10,7 @@
 </div>
 </c:if>
 <h2>日報管理システムへようこそ</h2>
+<p><%=(String)request.getServletContext().getAttribute("salt") %></p>
 <h3>【自分の日報　一覧】</h3>
  <table id="report_list">
  <tbody>

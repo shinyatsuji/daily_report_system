@@ -43,6 +43,7 @@ public class ReportsUpdateServlet extends HttpServlet {
             EntityManager em = DBUtil.createEntityManager();
 
             Report r = em.find(Report.class, (Integer) (request.getSession().getAttribute("report_id")));
+            List<String> errors = new ArrayList<String>();
 
             //            Date report_date = new Date(System.currentTimeMillis());
             //            String rd_str = request.getParameter("report_date");
@@ -51,19 +52,17 @@ public class ReportsUpdateServlet extends HttpServlet {
             //            }
             //            r.setReport_date(report_date);
 
-            List<String> errors = new ArrayList<String>();
             String rd_str = request.getParameter("report_date");
             if (rd_str != null && !rd_str.equals("")) {
                 r.setReport_date(Date.valueOf(rd_str));
             } else {
-                errors.add(ReportValidator._validateReport_Date(rd_str));
+                errors = ReportValidator._validateReport_Date(rd_str);
             }
 
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
             r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
-
-            ReportValidator.validate(r);
+            ReportValidator._validate(r, errors);
             if (errors.size() > 0) {
                 em.close();
 
