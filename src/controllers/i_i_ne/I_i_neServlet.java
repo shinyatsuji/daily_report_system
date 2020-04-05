@@ -1,4 +1,4 @@
-package controllers.reports;
+package controllers.i_i_ne;
 
 import java.io.IOException;
 
@@ -11,58 +11,56 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Employee;
+import models.I_i_ne;
 import models.Report;
 import utils.DBUtil;
 
 /**
- * Servlet implementation class ReportsShowServlet
+ * Servlet implementation class I_i_neServlet
  */
-@WebServlet("/reports/show")
-public class ReportsShowServlet extends HttpServlet {
+@WebServlet("/i_i_ne")
+public class I_i_neServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReportsShowServlet() {
+    public I_i_neServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
     /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         EntityManager em = DBUtil.createEntityManager();
 
         Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
+        I_i_ne i = new I_i_ne();
 
+        i.setReport(r);
         Employee e = (Employee) request.getSession().getAttribute("login_employee");
+        i.setEmployee(e);
+
+        em.getTransaction().begin();
+        em.persist(i);
+        em.getTransaction().commit();
 
         long i_i_ne_count = (long) em.createNamedQuery("getI_i_ne_CountByReport", Long.class)
                 .setParameter("report", r)
                 .getSingleResult();
 
-        //        long i_i_ne_count = I_i_ne.i_i_ne_count(r);
-
-        long i_i_ne_check = (long) em.createNamedQuery("getI_i_ne_Check_Count", Long.class)
-                .setParameter("report", r)
-                .setParameter("employee", e)
-                .getSingleResult();
-
         em.close();
 
         request.setAttribute("i_i_ne_count", i_i_ne_count);
-        request.setAttribute("i_i_ne_check", i_i_ne_check);
-
         request.setAttribute("report", r);
         request.setAttribute("_token", request.getSession().getId());
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");
         rd.forward(request, response);
-
     }
 
 }
