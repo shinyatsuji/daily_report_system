@@ -10,24 +10,25 @@
                 <c:out value="${flush}" />
             </div>
         </c:if>
-        <div class="report_menu_wrapper">
         <h2>日報 一覧</h2>
-        <p><a href="<c:url value='/reports/follow'/>">日報一覧（フォロー）</a></p>
-        </div>
         <table id="report_list">
             <tbody>
                 <tr>
                     <th class="report_name">氏名</th>
                     <th class="report_date">日付</th>
                     <th class="report_title">タイトル</th>
+                    <c:if test="${login_employee.admin_flag == 1}">
                     <th class="report_action">操作</th>
+                    </c:if>
                 </tr>
-                <c:forEach var="report" items="${reports}" varStatus="status">
+                <c:forEach var="report" items="${f_Reports}" varStatus="status">
                     <tr class="row${status.count%2}">
                       <td class="report_name"><c:out value="${report.employee.name}"/></td>
                        <td class="report_date"><fmt:formatDate value='${report.report_date}' pattern='yyyy-MM-dd'/></td>
                         <td class="report_title">${report.title}</td>
+                        <c:if test="${login_employee.admin_flag == 1}">
                          <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}'/>">詳細を見る</a></td>
+                        </c:if>
                     </tr>
                 </c:forEach>
             </tbody>

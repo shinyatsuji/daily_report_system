@@ -57,10 +57,10 @@ public class I_i_ne {
         this.report = report;
     }
 
-    //    public static long i_i_ne_count(Report report) {
-    //        EntityManager em = DBUtil.createEntityManager();
-    //        long i_i_ne_count = em.createNamedQuery("getI_i_ne_CountByReport", Long.class)
-    //                .setParameter("report", report)
-    //                .getSingleResult();
-    //        return i_i_ne_count;
+    //        public static long i_i_ne_count(Report report) {
+    //            EntityManager em = DBUtil.createEntityManager();
+    //            long i_i_ne_count = em.createNamedQuery("getI_i_ne_CountByReport", Long.class)
+    //                    .setParameter("report", report)
+    //                    .getSingleResult();
+    //            return i_i_ne_count;
 }

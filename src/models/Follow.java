@@ -12,7 +12,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Table(name = "follow")
-@NamedQueries({ @NamedQuery(name = "getAllFollows", query = "SELECT f FROM Follow AS f ORDER BY f.id DESC")
+@NamedQueries({
+        @NamedQuery(name = "getAllFollowers", query = "SELECT f FROM Follow AS f WHERE f.follow = :follow"),
+        @NamedQuery(name = "getFollowCountCheck", query = "SELECT COUNT(f) FROM Follow AS f WHERE f.follow = :follow AND f.follower = :follower"),
+        @NamedQuery(name = "getFollowCheck", query = "SELECT f FROM Follow AS f WHERE f.follow = :follow AND f.follower = :follower")
 })
 @Entity
 public class Follow {
@@ -22,12 +25,12 @@ public class Follow {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "employee_id", nullable = false)
-    private Employee employee;
+    @JoinColumn(name = "follow_id", nullable = false)
+    private Employee follow;
 
     @ManyToOne
-    @JoinColumn(name = "report_id", nullable = false)
-    private Report report;
+    @JoinColumn(name = "follower_id", nullable = false)
+    private Employee follower;
 
     public Integer getId() {
         return id;
@@ -37,20 +40,20 @@ public class Follow {
         this.id = id;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Employee getFollow() {
+        return follow;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setFollow(Employee follow) {
+        this.follow = follow;
     }
 
-    public Report getReport() {
-        return report;
+    public Employee getFollower() {
+        return follower;
     }
 
-    public void setReport(Report report) {
-        this.report = report;
+    public void setFollower(Employee follower) {
+        this.follower = follower;
     }
 
 }

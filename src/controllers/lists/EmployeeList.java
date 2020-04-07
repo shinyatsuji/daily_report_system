@@ -1,4 +1,4 @@
-package controllers.employees;
+package controllers.lists;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,16 +16,16 @@ import models.Follow;
 import utils.DBUtil;
 
 /**
- * Servlet implementation class EmployeesIndexServlet
+ * Servlet implementation class EmployeeList
  */
-@WebServlet("/employees/index")
-public class EmployeesIndexServlet extends HttpServlet {
+@WebServlet("/list")
+public class EmployeeList extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EmployeesIndexServlet() {
+    public EmployeeList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,7 +35,6 @@ public class EmployeesIndexServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         EntityManager em = DBUtil.createEntityManager();
 
         int page = 1;
@@ -77,4 +76,5 @@ public class EmployeesIndexServlet extends HttpServlet {
         rd.forward(request, response);
 
     }
+
 }

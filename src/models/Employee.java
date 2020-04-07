@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Table(name = "employees")
 @NamedQueries({
@@ -45,6 +46,9 @@ public class Employee {
 
     @Column(name = "delete_flag", nullable = false)
     private Integer delete_flag;
+
+    @Transient
+    Integer follow_id;
 
     public Integer getId() {
         return id;
@@ -109,4 +113,16 @@ public class Employee {
     public void setDelete_flag(Integer delete_flag) {
         this.delete_flag = delete_flag;
     }
+
+    @Transient
+    public Integer getFollow_id() {
+        return follow_id;
+    }
+
+    @Transient
+    public void setFollow_id(Integer follow_id) {
+        this.follow_id = follow_id;
+
+    }
+
 }

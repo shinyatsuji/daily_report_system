@@ -37,9 +37,17 @@ public class EmployeesShowServlet extends HttpServlet {
 
         Employee e = em.find(Employee.class, Integer.parseInt(request.getParameter("id")));
 
+        Employee follow = (Employee) request.getSession().getAttribute("login_employee");
+
+        long follow_count_check = (long) em.createNamedQuery("getFollowCountCheck", Long.class)
+                .setParameter("follow", follow)
+                .setParameter("follower", e)
+                .getSingleResult();
+
         em.close();
 
         request.setAttribute("employee", e);
+        request.setAttribute("follow_count_check", follow_count_check);
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/show.jsp");
         rd.forward(request, response);

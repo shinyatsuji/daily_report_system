@@ -51,6 +51,20 @@
                 <h2>お探しのデータは見つかりませんでした。</h2>
             </c:otherwise>
         </c:choose>
+        <c:choose>
+        <c:when test = "${follow_count_check == 0}">
+        <form method="POST" action="<c:url value='/follow'/>">
+         <input type="hidden" name="id" value="${employee.id}">
+        <button>フォローする</button>
+        </form>
+        </c:when>
+        <c:otherwise>
+        <form method="POST" action="<c:url value='/follow_release'/>">
+           <input type="hidden" name="id" value="${employee.id}">
+        <button>フォロー解除</button>
+        </form>
+        </c:otherwise>
+        </c:choose>
 
         <p>
             <a href="<c:url value='/employees/index' />">一覧に戻る</a>

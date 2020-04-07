@@ -162,3 +162,18 @@ pre {
 h3{
     font-size: larger;
 }
+
+.follow_button{
+    background:skyblue;
+    color:gray;
+    }
+
+.follow_release_button{
+    background:yellow;
+    color:gray;
+}
+
+.report_menu_wrapper{
+    display:inline-block;
+
+    }
