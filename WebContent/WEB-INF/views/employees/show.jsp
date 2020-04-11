@@ -25,6 +25,9 @@
                             <th>権限</th>
                             <td><c:choose>
                                     <c:when test="${employee.admin_flag==1}">管理者</c:when>
+                                    <c:when test="${employee.admin_flag==2}">課長</c:when>
+                                    <c:when test="${employee.admin_flag==3}">部長</c:when>
+
                                     <c:otherwise>一般</c:otherwise>
                                 </c:choose></td>
                         </tr>
@@ -52,18 +55,18 @@
             </c:otherwise>
         </c:choose>
         <c:choose>
-        <c:when test = "${follow_count_check == 0}">
-        <form method="POST" action="<c:url value='/follow'/>">
-         <input type="hidden" name="id" value="${employee.id}">
-        <button>フォローする</button>
-        </form>
-        </c:when>
-        <c:otherwise>
-        <form method="POST" action="<c:url value='/follow_release'/>">
-           <input type="hidden" name="id" value="${employee.id}">
-        <button>フォロー解除</button>
-        </form>
-        </c:otherwise>
+            <c:when test="${follow_count_check == 0}">
+                <form method="POST" action="<c:url value='/follow'/>">
+                    <input type="hidden" name="id" value="${employee.id}">
+                    <button>フォローする</button>
+                </form>
+            </c:when>
+            <c:otherwise>
+                <form method="POST" action="<c:url value='/follow_release'/>">
+                    <input type="hidden" name="id" value="${employee.id}">
+                    <button>フォロー解除</button>
+                </form>
+            </c:otherwise>
         </c:choose>
 
         <p>
