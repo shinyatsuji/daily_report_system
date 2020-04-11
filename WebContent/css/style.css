@@ -148,12 +148,23 @@ table#report_list .report_date {
 }
 
 table#report_list .report_title {
-    width: 37%;
+    width: 30%;
 }
 
 table#report_list .report_action {
-    width: 13%;
+    width: 15%;
 }
+
+table#report_list .report_approval {
+    width: 15%;
+}
+
+table#report_list .report_approval_yet {
+    width: 15%;
+    color:red;
+}
+
+
 
 pre {
     font-family: "Hiragino Kaku Gothic Pro",Meiryo,"MS PGothic",Helvetica,Arial,sans-serif;
