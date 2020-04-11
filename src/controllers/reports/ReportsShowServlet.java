@@ -54,6 +54,8 @@ public class ReportsShowServlet extends HttpServlet {
 
         em.close();
 
+        request.setAttribute("login_employee", e);
+
         request.setAttribute("i_i_ne_count", i_i_ne_count);
         request.setAttribute("i_i_ne_check", i_i_ne_check);
 

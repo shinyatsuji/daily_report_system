@@ -17,7 +17,7 @@
                 <tr>
                     <th class="employee_code">社員番号</th>
                     <th>氏名</th>
-                    <c:if test="${login_employee.admin_flag ==1 }">
+                    <c:if test="${!(login_employee.admin_flag == 0)}">
                     <th>操作</th>
                     </c:if>
                     <th>フォロー </th>
@@ -26,7 +26,7 @@
                     <tr class="row${status.count %2}">
                         <td><c:out value="${employee.code}" /></td>
                         <td><c:out value="${employee.name}" /></td>
-                   <c:if test="${login_employee.admin_flag ==1 }">
+                   <c:if test="${!(login_employee.admin_flag ==0)}">
                        <td><c:choose>
                                 <c:when test="${employee.delete_flag ==1}">
                                 （削除済み）

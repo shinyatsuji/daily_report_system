@@ -49,18 +49,28 @@
 </c:choose>
 <p><a href="<c:url value='/reports/index'/>">一覧に戻る</a></p>
 
-
+<c:choose>
+<c:when test = "${login_employee.id == report.employee.id}">
+--ご本人の日報です--
+</c:when>
+<c:otherwise>
 <c:choose>
 <c:when test="${i_i_ne_check == 0}">
-<form method="POST" action="<c:url value='/i_i_ne?id=${report.id}'/>">
+<form method="POST" action="<c:url value='/i_i_ne'/>">
+<input type="hidden" name="id" value="${report.id}">
 <button>いいね！</button> : <c:out value="${i_i_ne_count}"/>
 </form>
 </c:when>
 <c:otherwise>
- <form method="POST" action=" <c:url value="/i_i_ne_release?id=${report.id}"/>">
+ <form method="POST" action=" <c:url value="/i_i_ne_release"/>">
+ <input type="hidden" name="id" value="${report.id}">
 <button>いいねを解除する</button> : <c:out value="${i_i_ne_count}"/>
  </form>
 </c:otherwise>
 </c:choose>
+
+</c:otherwise>
+</c:choose>
+
 </c:param>
 </c:import>

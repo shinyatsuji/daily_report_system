@@ -8,8 +8,47 @@
 <div id="flush_success">
 <c:out value="${flush}"/>
 </div>
+
 </c:if>
 <h2>日報管理システムへようこそ</h2>
+<h3>【タイムカード登録】</h3>
+<br>
+<c:choose>
+<c:when test = "${!(attendance.workday_begin_flag == 1)}">
+<a href="<c:url value='/begin'/>">出勤する</a>&nbsp;
+</c:when>
+<c:otherwise>
+-出勤済-
+</c:otherwise>
+</c:choose>
+<c:choose>
+<c:when test ="${!(attendance.workday_finish_flag == 1)}">
+<a href="<c:url value='/finish'/>">退勤する</a>&nbsp;
+</c:when>
+<c:otherwise>
+-退勤済-
+</c:otherwise>
+</c:choose>
+<br><br>
+<table>
+<thead>
+<tr>
+ <th>出勤時間</th>
+ <th>退勤時間</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<fmt:formatDate value="${attendance.begin}" pattern="yyyy年MM月dd日 HH時mm分"/>
+</td>
+<td>
+<fmt:formatDate value="${attendance.finish}" pattern="yyyy年MM月dd日　HH時mm分"/>
+</td>
+</tr>
+</tbody>
+</table>
+<br><br>
 <h3>【自分の日報　一覧】</h3>
  <table id="report_list">
  <tbody>
