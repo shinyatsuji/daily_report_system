@@ -2,8 +2,9 @@ package controllers.toppage;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -45,21 +46,13 @@ public class TopPageIndexServlet extends HttpServlet {
         Employee login_employee = (Employee) request.getSession().getAttribute("login_employee");
 
         //        現在時間取得
-        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        LocalDateTime localDateTime = LocalDateTime.now();
+        //        時間以下を切り捨て
+        LocalDateTime truncatedDays = localDateTime.truncatedTo(ChronoUnit.DAYS);
 
-        //        フォーマットを作って時間以下を切り捨て
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        String workdayString = sdf.format(currentTime);
-        System.out.println("出勤日は：" + workdayString);
-
-        //        Timestamp型に切り捨てたものを入れ直す
-        Timestamp workday = null;
-        try {
-            workday = new Timestamp(new SimpleDateFormat("yyyy/MM/dd").parse(workdayString).getTime());
-        } catch (ParseException e) {
-            // TODO 自動生成された catch ブロック
-            e.printStackTrace();
-        }
+        LocalDateTime beginningMonth = truncatedDays.with(TemporalAdjusters.firstDayOfMonth());
+        //        Timestamp型に変換
+        Timestamp workday = Timestamp.valueOf(truncatedDays);
 
         //        Timestamp（”今日の年月日　00:00:00”)で検索をかける
         List<Attendance> workdays = em.createNamedQuery("getAttendanceByWorkday", Attendance.class)

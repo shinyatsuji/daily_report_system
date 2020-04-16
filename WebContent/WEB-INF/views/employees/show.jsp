@@ -54,6 +54,13 @@
                 <h2>お探しのデータは見つかりませんでした。</h2>
             </c:otherwise>
         </c:choose>
+
+
+         <c:choose>
+        <c:when test="${sessionScope.login_employee.id == employee.id}">
+        -ご本人です-
+        </c:when>
+        <c:otherwise>
         <c:choose>
             <c:when test="${follow_count_check == 0}">
                 <form method="POST" action="<c:url value='/follow'/>">
@@ -68,7 +75,8 @@
                 </form>
             </c:otherwise>
         </c:choose>
-
+        </c:otherwise>
+        </c:choose>
         <p>
             <a href="<c:url value='/employees/index' />">一覧に戻る</a>
     </c:param>

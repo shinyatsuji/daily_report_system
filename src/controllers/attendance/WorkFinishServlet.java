@@ -1,9 +1,9 @@
-package controllers.timestamp;
+package controllers.attendance;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -18,16 +18,16 @@ import models.Employee;
 import utils.DBUtil;
 
 /**
- * Servlet implementation class WorkBeginServlet
+ * Servlet implementation class WorkFinishServlet
  */
-@WebServlet("/begin")
-public class WorkBeginServlet extends HttpServlet {
+@WebServlet("/finish")
+public class WorkFinishServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WorkBeginServlet() {
+    public WorkFinishServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,44 +43,40 @@ public class WorkBeginServlet extends HttpServlet {
 
         Employee login_employee = (Employee) request.getSession().getAttribute("login_employee");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        String workdayString = sdf.format(currentTime);
-        System.out.println("出勤日は：" + workdayString);
-
-        Timestamp workday = null;
-        try {
-            workday = new Timestamp(new SimpleDateFormat("yyyy/MM/dd").parse(workdayString).getTime());
-        } catch (ParseException e) {
-            // TODO 自動生成された catch ブロック
-            e.printStackTrace();
-        }
+        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime truncatedDays = localDateTime.truncatedTo(ChronoUnit.DAYS);
+        Timestamp workday = Timestamp.valueOf(truncatedDays);
 
         List<Attendance> workdays = em.createNamedQuery("getAttendanceByWorkday", Attendance.class)
                 .setParameter("workday", workday)
                 .setParameter("employee", login_employee)
                 .getResultList();
 
-        Attendance attendance = new Attendance();
+        if (workdays.size() > 0) {
 
-        if (workdays.size() == 0) {
+            Attendance attendance = workdays.get(0);
+            Timestamp finish = attendance.getFinish();
 
-            attendance.setEmployee(login_employee);
-            attendance.setBegin(currentTime);
+            if (finish != null) {
+                return;
+            } else {
+                attendance.setFinish(currentTime);
+                attendance.setWorkday_finish_flag(1);
+            }
 
-            attendance.setWorkday(workday);
-            attendance.setWorkday_begin_flag(1);
-
-            System.out.println("フィールドは" + workday);
             em.getTransaction().begin();
             em.persist(attendance);
             em.getTransaction().commit();
 
+            em.close();
+
+            request.getSession().setAttribute("attendance", attendance);
+
         } else {
-            attendance = workdays.get(0);
 
+            em.close();
+            request.getSession().setAttribute("flush", "出勤を先に登録してください");
         }
-
-        em.close();
 
         response.sendRedirect(request.getContextPath() + "/index.html");
 

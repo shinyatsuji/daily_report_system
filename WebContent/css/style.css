@@ -164,6 +164,27 @@ table#report_list .report_approval_yet {
     color:red;
 }
 
+table#attendance_list th {
+    font-weight: bold;
+    padding: 10px 2%;
+}
+
+table#attendance_list .attendance_name {
+    width: 20%;
+    padding: 10px 2%;
+}
+table#report_list .attendance_workday {
+    width: 20%;
+}
+
+table#report_list .attendance_begin {
+    width: 30%;
+}
+
+table#report_list .attendance_finish {
+    width: 30%;
+}
+
 
 
 pre {
